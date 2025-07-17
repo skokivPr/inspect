@@ -1,0 +1,770 @@
+#css-inspector-wrapper {
+    font-family: "Share Tech Mono", monospace;
+    color: #f5f5f7;
+    /* Domyślny kolor tekstu dla całego UI */
+}
+
+#css-inspector-highlighter {
+    display: none;
+    position: absolute;
+    border: 1px dotted #ff0000b6;
+    background-color: rgba(255, 0, 0, 0.116);
+    border-radius: 0px;
+    z-index: 9999998;
+    pointer-events: none;
+    transition: all 0.1s ease-out;
+}
+
+#css-inspector-info-panel {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(44, 44, 46, 0.8);
+    color: #f5f5f7;
+    border: 1px solid #ff000096;
+    border-radius: 0px;
+    padding: 15px;
+    font-size: 14px;
+    z-index: 99999999;
+    pointer-events: none;
+    width: 460px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transition: border-color 0.3s ease;
+    backdrop-filter: blur(40px);
+}
+
+#css-inspector-info-panel .section {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #444;
+}
+
+#css-inspector-info-panel .section:last-of-type {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+#css-inspector-info-panel .title {
+    font-weight: 600;
+    color: #a0a0a5;
+    margin-bottom: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#css-inspector-info-panel .prop {
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#css-inspector-info-panel .color-box {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #fff;
+    border-radius: 0px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+#css-inspector-info-panel .click-info {
+    text-align: center;
+    margin-top: 15px;
+    padding: 8px;
+    background-color: #3a3a3c;
+    border-radius: 0px;
+    font-weight: 500;
+    color: #e5e5e7;
+}
+
+.css-inspector-button {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    background-color: #3a3a3c;
+    color: #f5f5f7;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2147483647;
+    /* Najwyższy możliwy z-index */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: 1px solid #555;
+    font-size: 20px;
+}
+
+.css-inspector-button:hover {
+    transform: scale(1.1);
+    background-color: #4a4a4c;
+}
+
+#css-inspector-toggle-button {
+    bottom: 20px;
+    right: 20px;
+}
+
+#css-inspector-toggle-button.active {
+    background-color: #ff0000;
+    color: white;
+    border-color: #000000;
+}
+
+#css-inspector-list-toggle-button {
+    bottom: 80px;
+    right: 20px;
+    display: none;
+    /* Initially hidden */
+}
+
+#css-inspector-list-toggle-button.active {
+    background-color: #00ff15;
+    color: black;
+    border-color: #000;
+}
+
+#css-inspector-settings-button {
+    bottom: 140px;
+    right: 20px;
+}
+
+#css-inspector-copied-list {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 100vh;
+    max-height: 100vh;
+    background: rgba(44, 44, 46, 0.8);
+    backdrop-filter: blur(40px);
+    color: #f5f5f7;
+    border-right: 1px solid #404040;
+    border-radius: 0;
+    z-index: 2147483646;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#css-inspector-copied-list.visible {
+    transform: translateX(0);
+}
+
+#css-inspector-copied-list .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #444;
+    background: #3a3a3c;
+    border-radius: 0;
+    flex-shrink: 0;
+}
+
+#css-inspector-copied-list .list-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#css-inspector-copied-list .list-header .buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#css-inspector-copied-list .list-header button {
+    background: #555;
+    border: none;
+    color: #f5f5f7;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 0px;
+    transition: background-color 0.2s ease;
+}
+
+#css-inspector-copied-list .list-header button:hover {
+    background-color: #666;
+}
+
+#css-inspector-copied-list #css-inspector-close-btn {
+    font-size: 20px;
+    line-height: 1;
+    color: #a0a0a5;
+    background: none;
+    padding: 0 5px;
+}
+
+#css-inspector-copied-list #css-inspector-close-btn:hover {
+    color: #fff;
+}
+
+#css-inspector-copied-list .list-content {
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+#css-inspector-copied-list .copied-item {
+    background: #3a3a3c;
+    border-radius: 0px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+    padding: 10px;
+}
+
+#css-inspector-copied-list .copied-item:last-child {
+    margin-bottom: 0;
+}
+
+#css-inspector-copied-list .copied-item pre {
+    margin: 0;
+    padding: 0;
+    background: #212123;
+    color: #e5e5e7;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-family: "Share Tech Mono", monospace;
+    font-size: 13px;
+    border-radius: 0px;
+    border: 1px solid #404040;
+    padding: 12px;
+}
+
+#css-inspector-copied-list .copied-item code {
+    padding: 0;
+    color: #abb2bf;
+}
+
+#css-inspector-copied-list .item-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+#css-inspector-copied-list .item-actions button {
+    background: #555;
+    color: #f5f5f7;
+    border: none;
+    border-radius: 0px;
+    padding: 4px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#css-inspector-copied-list .item-actions button i {
+    margin-right: 5px;
+}
+
+#css-inspector-copied-list .item-actions button:hover {
+    background: #666;
+}
+
+#css-inspector-copied-list .item-actions .gemini-explain-btn {
+    background-color: #8a2be2;
+}
+
+#css-inspector-copied-list .item-actions .delete-item-btn {
+    background-color: #dc143c;
+}
+
+#css-inspector-copied-list .item-actions .save-edit-btn {
+    background-color: #28a745;
+}
+
+#css-inspector-copied-list .edit-textarea {
+    width: 100%;
+    min-height: 250px;
+    background: #212123;
+    border: 1px solid #383838;
+    color: #e5e5e7;
+    font-family: "Share Tech Mono", monospace;
+    font-size: 13px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 0;
+    scrollbar-width: none;
+}
+
+#css-inspector-copied-list .color-box {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #888;
+    border-radius: 0px;
+    vertical-align: middle;
+    margin-right: 6px;
+    position: relative;
+    top: -1px;
+}
+
+#css-inspector-copied-list code .hl-selector {
+    color: #c678dd;
+}
+
+#css-inspector-copied-list code .hl-property {
+    color: #61afef;
+}
+
+#css-inspector-copied-list code .hl-value {
+    color: #98c379;
+}
+
+#css-inspector-copied-list code .hl-comment {
+    color: #5c6370;
+    font-style: italic;
+}
+
+.css-inspector-modal {
+    display: none;
+    position: fixed;
+    z-index: 2147483647;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(40px);
+}
+
+.css-inspector-modal-content {
+    background-color: #2c2c2e;
+    margin: 10% auto;
+    padding: 25px;
+    border: 1px solid #555;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 0px;
+    color: #f5f5f7;
+    position: relative;
+}
+
+.css-inspector-modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.css-inspector-modal-close:hover,
+.css-inspector-modal-close:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+#gemini-explanation {
+    margin-top: 20px;
+    white-space: pre-wrap;
+    font-family: "Share Tech Mono", monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#gemini-explanation.loading::after {
+    content: "⚙️";
+    display: inline-block;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#css-inspector-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 0px;
+    z-index: 2147483647;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, bottom 0.3s;
+    z-index: 999999999999999;
+}
+
+#css-inspector-toast.show {
+    bottom: 40px;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- Settings Panel --- */
+#css-inspector-settings-panel .settings-section {
+    margin-bottom: 20px;
+}
+
+#css-inspector-settings-panel .settings-section:last-of-type {
+    margin-bottom: 0;
+}
+
+#css-inspector-settings-panel h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 10px;
+}
+
+#css-inspector-settings-panel .settings-buttons-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#css-inspector-settings-panel .settings-button,
+#css-inspector-import-label {
+    padding: 8px 15px;
+    border: 1px solid #666;
+    background: #444;
+    color: #f5f5f7;
+    cursor: pointer;
+    border-radius: 0px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#css-inspector-settings-panel .settings-button i,
+#css-inspector-import-label i {
+    margin-right: 8px;
+}
+
+#css-inspector-settings-panel .settings-button:hover,
+#css-inspector-import-label:hover {
+    background: #555;
+    border-color: #888;
+}
+
+#css-inspector-settings-panel .theme-button.active {
+    background: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+/* ===== Custom Scrollbar CSS ===== */
+.list-content {
+    scrollbar-width: none;
+    scrollbar-color: #ff7300 #303030;
+}
+
+.list-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.list-content::-webkit-scrollbar-track {
+    background: #303030;
+}
+
+.list-content::-webkit-scrollbar-thumb {
+    background-color: #ff7300;
+    border-radius: 5px;
+    border: 1px solid #1c1c1c;
+}
+
+/* --- Light Theme --- */
+#css-inspector-wrapper.theme-light .css-inspector-button {
+    background-color: #f0f0f0;
+    color: #333;
+    border-color: #ccc;
+}
+
+#css-inspector-wrapper.theme-light #css-inspector-toggle-button.active {
+    background-color: #e00;
+    color: #fff;
+}
+
+#css-inspector-wrapper.theme-light #css-inspector-list-toggle-button.active {
+    background-color: #28a745;
+    color: #fff;
+}
+
+#css-inspector-wrapper.theme-light #css-inspector-info-panel {
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+    border-color: #007bff96;
+}
+
+#css-inspector-wrapper.theme-light #css-inspector-info-panel .section {
+    border-bottom-color: #ddd;
+}
+
+#css-inspector-wrapper.theme-light #css-inspector-info-panel .title {
+    color: #666;
+}
+
+#css-inspector-wrapper.theme-light #css-inspector-info-panel .click-info {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+#css-inspector-wrapper.theme-light #css-inspector-copied-list {
+    background: rgba(250, 250, 250, 0.9);
+    color: #333;
+    border-right-color: #ddd;
+}
+
+#css-inspector-wrapper.theme-light #css-inspector-copied-list .list-header {
+    background: #f8f9fa;
+    border-bottom-color: #ddd;
+}
+
+#css-inspector-wrapper.theme-light #css-inspector-copied-list .list-header button {
+    background: #e9ecef;
+    color: #333;
+}
+
+#css-inspector-wrapper.theme-light #css-inspector-copied-list .copied-item {
+    background: #fff;
+}
+
+#css-inspector-wrapper.theme-light #css-inspector-copied-list .copied-item pre,
+#css-inspector-wrapper.theme-light #css-inspector-copied-list .edit-textarea {
+    background: #f8f9fa;
+    color: #333;
+    border-color: #eee;
+}
+
+#css-inspector-wrapper.theme-light .css-inspector-modal-content {
+    background-color: #fff;
+    color: #333;
+    border-color: #ddd;
+}
+
+#css-inspector-wrapper.theme-light .settings-button,
+#css-inspector-wrapper.theme-light #css-inspector-import-label {
+    background: #e9ecef;
+    color: #333;
+    border-color: #ccc;
+}
+
+#css-inspector-wrapper.theme-light .list-content {
+    scrollbar-color: #555 #f0f0f0;
+}
+
+#css-inspector-wrapper.theme-light .list-content::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+#css-inspector-wrapper.theme-light .list-content::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-color: #f0f0f0;
+}
+
+/* --- Synthwave Theme --- */
+#css-inspector-wrapper.theme-synthwave #css-inspector-highlighter {
+    border-color: #ff00ff;
+    background-color: rgba(255, 0, 255, 0.15);
+}
+
+#css-inspector-wrapper.theme-synthwave .css-inspector-button {
+    background-color: #2c134b;
+    color: #00f7ff;
+    border-color: #ff00ff;
+}
+
+#css-inspector-wrapper.theme-synthwave #css-inspector-toggle-button.active {
+    background-color: #ff00ff;
+    color: #fff;
+}
+
+#css-inspector-wrapper.theme-synthwave #css-inspector-list-toggle-button.active {
+    background-color: #00f7ff;
+    color: #2c134b;
+}
+
+#css-inspector-wrapper.theme-synthwave #css-inspector-info-panel {
+    background: rgba(28, 12, 57, 0.85);
+    color: #eee;
+    border-color: #ff00ff;
+}
+
+#css-inspector-wrapper.theme-synthwave #css-inspector-info-panel .section {
+    border-bottom-color: #4a2b88;
+}
+
+#css-inspector-wrapper.theme-synthwave #css-inspector-info-panel .title {
+    color: #00f7ff;
+}
+
+#css-inspector-wrapper.theme-synthwave #css-inspector-info-panel .click-info {
+    background-color: #4a2b88;
+    color: #eee;
+}
+
+#css-inspector-wrapper.theme-synthwave #css-inspector-copied-list {
+    background: rgba(44, 19, 75, 0.9);
+    color: #eee;
+    border-right-color: #ff00ff;
+}
+
+#css-inspector-wrapper.theme-synthwave #css-inspector-copied-list .list-header {
+    background: #1c0c39;
+    border-bottom-color: #4a2b88;
+}
+
+#css-inspector-wrapper.theme-synthwave #css-inspector-copied-list .list-header button {
+    background: #4a2b88;
+    color: #00f7ff;
+}
+
+#css-inspector-wrapper.theme-synthwave #css-inspector-copied-list .copied-item {
+    background: #4a2b88;
+}
+
+#css-inspector-wrapper.theme-synthwave #css-inspector-copied-list .copied-item pre,
+#css-inspector-wrapper.theme-synthwave #css-inspector-copied-list .edit-textarea {
+    background: #1c0c39;
+    color: #eee;
+    border-color: #ff00ff;
+}
+
+#css-inspector-wrapper.theme-synthwave .css-inspector-modal-content {
+    background-color: #2c134b;
+    color: #eee;
+    border-color: #4a2b88;
+}
+
+#css-inspector-wrapper.theme-synthwave .settings-button,
+#css-inspector-wrapper.theme-synthwave #css-inspector-import-label {
+    background: #4a2b88;
+    color: #00f7ff;
+    border-color: #00f7ff;
+}
+
+#css-inspector-wrapper.theme-synthwave .list-content {
+    scrollbar-color: #ff00ff #1c0c39;
+}
+
+#css-inspector-wrapper.theme-synthwave .list-content::-webkit-scrollbar-track {
+    background: #1c0c39;
+}
+
+#css-inspector-wrapper.theme-synthwave .list-content::-webkit-scrollbar-thumb {
+    background-color: #ff00ff;
+    border-color: #1c0c39;
+}
+
+/* --- Charcoal Theme --- */
+#css-inspector-wrapper.theme-charcoal #css-inspector-highlighter {
+    border-color: #e67e22;
+    background-color: rgba(230, 126, 34, 0.15);
+}
+
+#css-inspector-wrapper.theme-charcoal .css-inspector-button {
+    background-color: #34495e;
+    color: #ecf0f1;
+    border-color: #2c3e50;
+}
+
+#css-inspector-wrapper.theme-charcoal #css-inspector-toggle-button.active {
+    background-color: #e67e22;
+    color: #fff;
+}
+
+#css-inspector-wrapper.theme-charcoal #css-inspector-list-toggle-button.active {
+    background-color: #16a085;
+    color: #fff;
+}
+
+#css-inspector-wrapper.theme-charcoal #css-inspector-info-panel {
+    background: rgba(44, 62, 80, 0.9);
+    color: #ecf0f1;
+    border-color: #e67e22;
+}
+
+#css-inspector-wrapper.theme-charcoal #css-inspector-info-panel .section {
+    border-bottom-color: #34495e;
+}
+
+#css-inspector-wrapper.theme-charcoal #css-inspector-info-panel .title {
+    color: #e67e22;
+}
+
+#css-inspector-wrapper.theme-charcoal #css-inspector-info-panel .click-info {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+}
+
+#css-inspector-wrapper.theme-charcoal #css-inspector-copied-list {
+    background: rgba(33, 37, 41, 0.95);
+    color: #ecf0f1;
+    border-right-color: #34495e;
+}
+
+#css-inspector-wrapper.theme-charcoal #css-inspector-copied-list .list-header {
+    background: #2c3e50;
+    border-bottom-color: #34495e;
+}
+
+#css-inspector-wrapper.theme-charcoal #css-inspector-copied-list .list-header button {
+    background: #34495e;
+    color: #ecf0f1;
+}
+
+#css-inspector-wrapper.theme-charcoal #css-inspector-copied-list .copied-item {
+    background: #2c3e50;
+}
+
+#css-inspector-wrapper.theme-charcoal #css-inspector-copied-list .copied-item pre,
+#css-inspector-wrapper.theme-charcoal #css-inspector-copied-list .edit-textarea {
+    background: #212529;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+#css-inspector-wrapper.theme-charcoal .css-inspector-modal-content {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+#css-inspector-wrapper.theme-charcoal .settings-button,
+#css-inspector-wrapper.theme-charcoal #css-inspector-import-label {
+    background: #34495e;
+    color: #ecf0f1;
+    border-color: #7f8c8d;
+}
+
+#css-inspector-wrapper.theme-charcoal .list-content {
+    scrollbar-color: #e67e22 #212529;
+}
+
+#css-inspector-wrapper.theme-charcoal .list-content::-webkit-scrollbar-track {
+    background: #212529;
+}
+
+#css-inspector-wrapper.theme-charcoal .list-content::-webkit-scrollbar-thumb {
+    background-color: #e67e22;
+    border-color: #212529;
+}
