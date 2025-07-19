@@ -26,7 +26,7 @@
     border-radius: 0px;
     padding: 15px;
     font-size: 14px;
-    z-index: 99999999;
+    z-index: 9999999999;
     pointer-events: none;
     width: 460px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
@@ -98,11 +98,12 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     border: 1px solid #555;
-    font-size: 20px;
+    font-size: 250px;
 }
 
 .css-inspector-button:hover {
     background-color: #4a4a4c;
+    opacity: 0.5;
 }
 
 #css-inspector-toggle-button {
@@ -138,8 +139,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 500px;
-    height: 100vh;
+    width: 600px;
+    height: auto;
     max-height: 100vh;
     background: rgba(44, 44, 46, 0.8);
     backdrop-filter: blur(40px);
@@ -209,7 +210,7 @@
 }
 
 #css-inspector-copied-list .list-content {
-    padding: 15px;
+    padding: 5px;
     overflow-y: auto;
     flex-grow: 1;
 }
@@ -217,10 +218,10 @@
 #css-inspector-copied-list .copied-item {
     background: #3a3a3c;
     border-radius: 0px;
-    margin-bottom: 10px;
     position: relative;
+    margin-bottom: -5px;
     overflow: hidden;
-    padding: 10px;
+    padding: 5px;
 }
 
 #css-inspector-copied-list .copied-item:last-child {
@@ -248,9 +249,9 @@
 
 #css-inspector-copied-list .item-actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 6px;
-    margin-top: 8px;
+    justify-content: space-between;
+    gap: 5px;
+    margin-top: 5px;
 }
 
 #css-inspector-copied-list .item-actions button {
@@ -265,6 +266,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%
 }
 
 #css-inspector-copied-list .item-actions button i {
@@ -280,7 +282,7 @@
 }
 
 #css-inspector-copied-list .item-actions .delete-item-btn {
-    background-color: #dc143c;
+    background-color: #9c0000;
 }
 
 #css-inspector-copied-list .item-actions .save-edit-btn {
